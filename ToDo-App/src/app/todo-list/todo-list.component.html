@@ -1,0 +1,50 @@
+<div class="spinner">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+<!-- <div class="container-fluid"> -->
+<h2 class="text-center text-primary">ToDo List</h2>
+<div *ngIf="toDoItems.length == 0" class="no-items-container">
+    <h2 class="text-primary">There are not Items to display.</h2>
+    <button class="btn btn-success" (click)="create()">Create Your First To-Do</button>
+  </div>
+<div *ngIf="toDoItems.length > 0" class="container">
+  <div *ngFor="let item of toDoItems">
+    <div class="list-container">
+      <div class="dropdown ellipsis row">
+        <button class="btn btn-secondary" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" routerLink="/create-todo" [queryParams]="{userId:item.userID}">
+            <i class="fas fa-plus" aria-hidden="true"></i> Create-ToDo</a>
+          <a class="dropdown-item" routerLink="/edit-todo" [queryParams]="{itemId:item.id}">
+            <i class="far fa-edit"></i> Edit-ToDo</a>
+          <a class="dropdown-item" (click)="deleteToDo(item.id,item.isComplete,deleteTodo)">
+            <i class="far fa-trash-alt"></i> Delete-ToDo</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <p>Task Id: {{item.id}}</p>
+          <p>Task Name: {{item.name}}</p>
+          <p>Task Completed: {{item.isComplete}}</p>
+          <p>User Name: {{item.user.firstName}} {{item.user.lastName}}</p>
+        </div>
+      </div>
+    </div>
+    <ng-template #deleteTodo>
+      <div class="modal-header">
+        <p>Delete ToDo Item</p>
+      </div>
+      <div class="modal-body">
+        <p>The Task has not been completed Yet!!</p>
+        <p>Are You Sure you want to delete it.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="deleteItem(item.id)">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="closeDialog()">No</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<!-- </div> -->

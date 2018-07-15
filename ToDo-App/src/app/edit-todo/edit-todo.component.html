@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <h2 class="text-center">Edit Task</h2>
+    <div class="text-center">
+      <div *ngIf="toDoItem" class="event-info-box">
+        <form #MyForm="ngForm" (ngSubmit)="submitForm(MyForm)">
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3 task-name">
+              Name of The Task:
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field>
+                <input id="TaskName" matInput name="taskName" placeholder="TaskName" required maxlength="20" [(ngModel)]="toDoItem.name">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3">
+              <p>Task Status:</p>
+            </div>
+            <div class="col-sm-3">
+              <mat-radio-group id="statusID" name="status" [(ngModel)]="toDoItem.isComplete"  #status="ngModel">
+                <mat-radio-button value="true" [checked]="toDoItem.isComplete" >Completed</mat-radio-button>
+                <mat-radio-button value="false" [checked]="!toDoItem.isComplete" >Yet To Be Completed</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="col-sm-3"></div>
+          </div>
+          <button type="submit" class="btn btn-secondary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
