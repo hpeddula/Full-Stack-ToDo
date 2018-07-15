@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{B9250742-7603-4578-8450-CB4698C75F3A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UserToDoItems/appsettings.json">
+    <Files>
+      <File FileName="UserToDoItems/Controllers/ToDoController.cs" Line="1" Column="1" />
+      <File FileName="UserToDoItems/Program.cs" Line="26" Column="1" />
+      <File FileName="UserToDoItems/Startup.cs" Line="28" Column="79" />
+      <File FileName="UserToDoItems/appsettings.json" Line="16" Column="131" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.UserToDoItems PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>
