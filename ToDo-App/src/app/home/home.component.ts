@@ -10,9 +10,15 @@ export class HomeComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit() {
+    var user1 = JSON.parse(localStorage.getItem("user"));
+    if(user1)
+    {
+      this.router.navigate(['']);
+    }
+    else
+    {
+      this.router.navigate(['/sign-in']);
+    }
   }
-  toDoList()
-  {
-    this.router.navigate(['/todo-list']);
-  }
+  
 }

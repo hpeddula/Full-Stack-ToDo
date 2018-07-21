@@ -4,10 +4,19 @@
 <!-- <div class="container-fluid"> -->
 <h2 class="text-center text-primary">ToDo List</h2>
 <div *ngIf="toDoItems.length == 0" class="no-items-container">
-    <h2 class="text-primary">There are not Items to display.</h2>
-    <button class="btn btn-success" (click)="create()">Create Your First To-Do</button>
-  </div>
+  <h2 class="text-primary">There are not Items to display.</h2>
+  <button class="btn btn-success" (click)="create()">Create Your First To-Do</button>
+</div>
 <div *ngIf="toDoItems.length > 0" class="container">
+  <div class="row">
+    <div *ngFor="let task of finishedTasks" class="col-sm-12">
+      <h2>Completed Tasks</h2>
+      <p>Task Id: {{task.id}}</p>
+      <p>Task Name: {{task.name}}</p>
+      <p>Task Completed: {{task.isComplete}}</p>
+      <p>User Name: {{task.user.firstName}} {{task.user.lastName}}</p>
+    </div>
+  </div>
   <div *ngFor="let item of toDoItems">
     <div class="list-container">
       <div class="dropdown ellipsis row">

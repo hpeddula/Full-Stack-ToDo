@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class TodoListComponent implements OnInit, OnDestroy {
   toDoItems: ToDoItem[];
   toDoItemSubscription: Subscription;
+  finishedTasks: ToDoItem[];
+  finishedTasksMsg = "";
   loading = true;
   dialogRef;
   userID;
@@ -33,6 +35,9 @@ export class TodoListComponent implements OnInit, OnDestroy {
         (error) => {
           console.log(error)
         });
+    this.todoService.getFinishedTasks(user1.userID)
+      .subscribe((items) => { this.finishedTasks = items },
+        (error) => { this.finishedTasksMsg ="Sorry We Could Not fetch your Finished Tasks." });
     this.toDoItemSubscription = this.todoService.ToDoListUpdated
       .subscribe((toDoItems) => this.toDoItems = toDoItems);
   }

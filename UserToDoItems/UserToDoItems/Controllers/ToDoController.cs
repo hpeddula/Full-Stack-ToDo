@@ -20,18 +20,18 @@ namespace UserToDoItems.Controllers
         [Route("GetAllToDoItems")]
         public List<ToDoItem> GetAllToDoItems()
         {
-                //var items = _context.ToDoItems.ToList();
-                var itms = (from itm in _context.ToDoItems
-                            join usr in _context.ToDoUsers on itm.UserID equals  usr.ID
-                            select new ToDoItem() { ID =itm.ID, Name = itm.Name,IsComplete= itm.IsComplete, UserID = itm.UserID, User = new ToDoUsers() { ID = usr.ID, FirstName = usr.FirstName, LastName = usr.LastName } }).ToList();
-                //foreach (var item in items)
-                //{
+            //var items = _context.ToDoItems.ToList();
+            var itms = (from itm in _context.ToDoItems
+                        join usr in _context.ToDoUsers on itm.UserID equals usr.ID
+                        select new ToDoItem() { ID = itm.ID, Name = itm.Name, IsComplete = itm.IsComplete, UserID = itm.UserID, User = new ToDoUsers() { ID = usr.ID, FirstName = usr.FirstName, LastName = usr.LastName } }).ToList();
+            //foreach (var item in items)
+            //{
 
-                //    item.User = (from users in _context.ToDoUsers where users.ID == item.UserID select new ToDoUsers() { FirstName = users.FirstName, LastName = users.LastName, ID = users.ID }).FirstOrDefault();
-                //    //_context.ToDoUsers.Where(us => us.ID == item.UserID).FirstOrDefault();
-                //}
-                return  itms.OrderByDescending((item) => item.ID).ToList();
-            
+            //    item.User = (from users in _context.ToDoUsers where users.ID == item.UserID select new ToDoUsers() { FirstName = users.FirstName, LastName = users.LastName, ID = users.ID }).FirstOrDefault();
+            //    //_context.ToDoUsers.Where(us => us.ID == item.UserID).FirstOrDefault();
+            //}
+            return itms.OrderByDescending((item) => item.ID).ToList();
+
         }
         [HttpGet("{id}")]
         [Route("GetToDoItemById/{id}")]
@@ -39,6 +39,21 @@ namespace UserToDoItems.Controllers
         {
             var item = await _context.ToDoItems.FindAsync(id);
             return item;
+        }
+        [HttpGet("{uid}")]
+        [Route("GetFinishedTasks/{uid}")]
+        public IActionResult GetFinishedTasks(int uid)
+        {
+
+            var finishedTasks = (from items in _context.ToDoItems where items.UserID == uid && items.IsComplete == true select new ToDoItem { ID = items.ID, Name = items.Name, IsComplete = items.IsComplete, UserID = items.UserID, User = new ToDoUsers { FirstName = items.User.FirstName, LastName = items.User.LastName } }).ToList();
+            if(finishedTasks == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(finishedTasks);
+            }
         }
         [HttpPost]
         [Route("Create")]

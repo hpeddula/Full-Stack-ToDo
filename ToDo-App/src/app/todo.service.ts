@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
-import { ToDoItem,User,Login } from './ToDo.model';
+import { ToDoItem, User, Login } from './ToDo.model';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 @Injectable()
@@ -9,9 +9,9 @@ export class ToDoService {
     constructor(private dataService: DataService) { }
     toDoItem: ToDoItem;
     toDoItems: ToDoItem[];
-    user:User;
-    login:Login;
-    ToDoListUpdated=new Subject<ToDoItem[]>();
+    user: User;
+    login: Login;
+    ToDoListUpdated = new Subject<ToDoItem[]>();
 
     getAllToDos(): Observable<ToDoItem[]> {
         return this.dataService.get(`ToDo/GetAllToDoItems`)
@@ -32,29 +32,32 @@ export class ToDoService {
     deleteToDo(id) {
         return this.dataService.delete(`ToDo/Delete/${id}`)
             .map(
-                (toDoItem)=>{
-                let index = this.toDoItems.findIndex((toDoItem)=> toDoItem.id === id);
-                this.toDoItems.splice(index,1);
-                this.emitToDoList();
-                return toDoItem;
+                (toDoItem) => {
+                    let index = this.toDoItems.findIndex((toDoItem) => toDoItem.id === id);
+                    this.toDoItems.splice(index, 1);
+                    this.emitToDoList();
+                    return toDoItem;
+                });
+    }
+    getFinishedTasks(uid): Observable<ToDoItem[]> {
+        return this.dataService.get(`ToDo/GetFinishedTasks/${uid}`)
+            .map((item) => {
+                return item;
             });
     }
-    emitToDoList()
-    {
+    emitToDoList() {
         this.ToDoListUpdated.next(this.toDoItems.slice());
     }
     getToDoByUserId(uid): Observable<ToDoItem[]> {
         return this.dataService.get(`Users/GetItemByUser/${uid}`)
             .map((toDoItems) => this.toDoItems = toDoItems);
     }
-    createUser(login:Login):Observable<Login>
-    {
-        return this.dataService.post(`Users/CreateUser`,login)
-            .map((login)=>this.login = login);
+    createUser(login: Login): Observable<Login> {
+        return this.dataService.post(`Users/CreateUser`, login)
+            .map((login) => this.login = login);
     }
-    validateUser(user:Login):Observable<Login>
-    {
-        return this.dataService.post(`Users/ValidateUser`,user)
-            .map((user)=>this.login = user);
+    validateUser(user: Login): Observable<Login> {
+        return this.dataService.post(`Users/ValidateUser`, user)
+            .map((user) => this.login = user);
     }
 }
